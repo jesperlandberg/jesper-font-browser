@@ -1,0 +1,13 @@
+node_modules
+dist
+.DS_Store
+
+# Installed agent skills (npx skills add)
+.agents
+skills-lock.json
+
+# tsc incremental cache
+*.tsbuildinfo
+
+# Symlinks into .agents, created by the skills installer
+.claude/skills

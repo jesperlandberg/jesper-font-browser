@@ -1,0 +1,225 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/host-grotesk/wght.css';
+
+@theme {
+    --spacing: 0.1rem;
+
+    --spacing-4: 0.4rem;
+    --spacing-8: 0.8rem;
+    --spacing-12: 1.2rem;
+    --spacing-16: 1.6rem;
+    --spacing-24: 2.4rem;
+    --spacing-32: 3.2rem;
+    --spacing-48: 4.8rem;
+
+
+    --text-label: 1.1rem;
+    --text-label--line-height: 1.4;
+    --text-label--letter-spacing: 0.04em;
+    --text-ui: 1.3rem;
+    --text-ui--line-height: 1.4;
+    --text-strong: 1.5rem;
+    --text-strong--line-height: 1.3;
+    --text-title: 2rem;
+    --text-title--line-height: 1.2;
+    --text-title--letter-spacing: -0.01em;
+    --text-specimen: 2.4rem;
+    --text-specimen--line-height: 1;
+
+    --font-ui: 'Host Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+
+    --breakpoint-*: initial;
+    --breakpoint-narrow: 650px;
+    --container-wide: 108rem;
+    --container-tight: 68rem;
+
+    --radius-panel: 1.6rem;
+    --radius-control: 0.8rem;
+
+    --default-transition-duration: 250ms;
+    --default-transition-timing-function: var(--ease-out);
+    /* Not --ease-out — that shadows Tailwind's own. */
+    --ease-snappy: cubic-bezier(0.22, 1, 0.36, 1);
+
+    --animate-enter: enter var(--default-transition-duration) var(--ease-out) both;
+
+}
+
+:root {
+    --sunken: #ededec;
+    --panel-shadow: 0 1px 2px rgb(0 0 0 / 0.05), 0 12px 32px rgb(0 0 0 / 0.06);
+    --lift-shadow: 0 6px 20px rgb(0 0 0 / 0.12);
+    --ground: #ffffff;
+    --raised: #f7f7f7;
+    --ink: #111111;
+    --muted: #767676;
+    --line: #e6e6e6;
+    --accent: #d4607d;
+
+    /* Two rows of list, left showing behind the sheet. --row-height is published
+       from constants.ts, so this follows it. */
+    --sheet-peek: calc(var(--row-height, 5.6rem) * 2);
+
+    --duration-fast: 150ms;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --sunken: #0a0a0a;
+        --ground: #161616;
+        --raised: #202020;
+        --ink: #f2f2f2;
+        --muted: #8c8c8c;
+        --line: #2a2a2a;
+        --accent: #ec96ab;
+        --panel-shadow: 0 1px 2px rgb(0 0 0 / 0.6), 0 16px 44px rgb(0 0 0 / 0.5);
+        --lift-shadow: 0 8px 28px rgb(0 0 0 / 0.65);
+    }
+}
+
+:root[data-theme='dark'] {
+    --sunken: #0a0a0a;
+    --ground: #161616;
+    --raised: #202020;
+    --ink: #f2f2f2;
+    --muted: #8c8c8c;
+    --line: #2a2a2a;
+    --accent: #ec96ab;
+    --panel-shadow: 0 1px 2px rgb(0 0 0 / 0.6), 0 16px 44px rgb(0 0 0 / 0.5);
+    --lift-shadow: 0 8px 28px rgb(0 0 0 / 0.65);
+}
+
+@theme inline {
+    --shadow-panel: var(--panel-shadow);
+    --shadow-lift: var(--lift-shadow);
+    --color-sunken: var(--sunken);
+    --color-ground: var(--ground);
+    --color-raised: var(--raised);
+    --color-ink: var(--ink);
+    --color-muted: var(--muted);
+    --color-line: var(--line);
+    --color-accent: var(--accent);
+}
+
+@layer base {
+    :root {
+        font-size: 62.5%;
+        color-scheme: light dark;
+    }
+
+    body {
+        margin: 0;
+        background: var(--sunken);
+        color: var(--ink);
+        font-family: var(--font-ui);
+        font-size: var(--text-ui);
+        line-height: 1.4;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+        -webkit-tap-highlight-color: transparent;
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: -2px;
+    }
+
+}
+
+@utility text-trim {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+}
+
+@utility duration-fast {
+    transition-duration: var(--duration-fast);
+}
+
+.range {
+    appearance: none;
+    width: 100%;
+    height: 16px;
+    background: transparent;
+}
+
+.range::-webkit-slider-runnable-track {
+    height: 4px;
+    margin-block: 6px;
+    border-radius: 999px;
+    background: linear-gradient(
+        to right,
+        var(--accent) 0 calc(var(--range, 0) * 100%),
+        var(--line) calc(var(--range, 0) * 100%) 100%
+    );
+}
+
+.range::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-top: -5px;
+    border: none;
+    border-radius: 999px;
+    background: var(--accent);
+    cursor: grab;
+    transition: scale var(--duration-fast) var(--ease-out);
+}
+
+.range:active::-webkit-slider-thumb {
+    cursor: grabbing;
+}
+
+.range:active::-webkit-slider-thumb {
+    scale: 1.15;
+    transition-duration: 0s;
+}
+
+.range:focus-visible {
+    outline: none;
+}
+
+.range:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.search-field::-webkit-search-cancel-button {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    background: var(--muted);
+    transition: background var(--duration-fast) var(--ease-out);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 3 9 9M9 3 3 9' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")
+        center / contain no-repeat;
+}
+
+.search-field::-webkit-search-cancel-button:hover {
+    background: var(--ink);
+}
+
+@keyframes enter {
+    from {
+        opacity: 0;
+    }
+}
+
+[data-theme-switching] * {
+    transition: none !important;
+}
+
+@media (pointer: coarse) {
+    input,
+    textarea,
+    select {
+        font-size: 1.6rem;
+    }
+}
